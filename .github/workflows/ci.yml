@@ -12,7 +12,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: 'node'
+        node-version: ['lts/*']
     
     steps:
     - uses: actions/checkout@v3
@@ -27,7 +27,7 @@ jobs:
   
     - name: Run linting
       run: npm run lint
-      
+
     - run: npm ci
     - run: npm run build
     - run: npm test
