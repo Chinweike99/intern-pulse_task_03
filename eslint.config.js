@@ -1,23 +1,3 @@
-// // eslint.config.js
-// import tseslint from 'typescript-eslint';
-
-// export default tseslint.config({
-//   files: ['**/*.ts'],
-//   languageOptions: {
-//     parserOptions: {
-//       project: './tsconfig.json',
-//     },
-//   },
-//   plugins: {
-//     '@typescript-eslint': tseslint.plugin,
-//   },
-//   rules: {
-//     '@typescript-eslint/no-unused-vars': 'warn',
-//     '@typescript-eslint/no-explicit-any': 'off',
-//   },
-// });
-
-
 import js from '@eslint/js';
 import tseslint from '@typescript-eslint/eslint-plugin';
 import tsparser from '@typescript-eslint/parser';
@@ -46,8 +26,8 @@ export default [
     },
   },
   {
-    // Configuration for ES module .js files (like eslint.config.js)
-    files: ['eslint.config.js'],
+    // Configuration for ES module .js files (config files that use import/export)
+    files: ['eslint.config.js', 'jest.config.js'],
     languageOptions: {
       sourceType: 'module',
       globals: {
@@ -56,9 +36,9 @@ export default [
     },
   },
   {
-    // Configuration for CommonJS files (like jest.config.js)
+    // Configuration for other CommonJS .js files
     files: ['**/*.js'],
-    ignores: ['eslint.config.js'],
+    ignores: ['eslint.config.js', 'jest.config.js'],
     languageOptions: {
       sourceType: 'commonjs',
       globals: {
@@ -67,7 +47,7 @@ export default [
     },
   },
   {
-    // Ignore compiled JavaScript files and config files
-    ignores: ['dist/**/*', 'node_modules/**/*', 'eslint.config.js'],
+    // Ignore compiled JavaScript files
+    ignores: ['dist/**/*', 'node_modules/**/*'],
   },
 ];
