@@ -5,12 +5,12 @@ export interface InitiatePayment{
 };
 
 
-export interface PaymentResonse {
+export interface PaymentResponse {
     id: string;
-    customer_name: string;
-    customer_email: string;
+    name: string;
+    email: string;
     amount: number;
     status: 'pending' | 'completed' | 'failed';
     reference: string;
-    created_at: Date;
+    created_at: Date
 }
