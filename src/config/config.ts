@@ -7,7 +7,7 @@ interface Config{
     PAYSTACK_SECRET_KEY: string,
     PAYSTACK_BASE_URL: string,
     NODE_ENV: 'development' | 'production';
-  IS_PRODUCTION: boolean; // Helper flag
+  IS_PRODUCTION: boolean; 
 }
 
 const config: Config = {
