@@ -10,7 +10,7 @@
     "build": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx",
-    "migrate" : "tsx src/migration/migrate.ts"
+    "migrate": "tsx src/migration/migrate.ts"
   },
   "repository": {
     "type": "git",
