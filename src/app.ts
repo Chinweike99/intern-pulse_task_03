@@ -2,7 +2,7 @@ import express, { NextFunction, Request, Response } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
 import rateLimit from 'express-rate-limit';
-import v1routes from './routes/v1/index.js'
+import v1routes from './routes/v1/index'
 
 const app = express();
 

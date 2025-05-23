@@ -1,9 +1,9 @@
 import axios from "axios";
-import config from "../config/config.js";
+import config from "../config/config";
 import {
   InitiatePayment,
   PaystackResponse,
-} from "../interfaces/payment.interface.js";
+} from "../interfaces/payment.interface";
 
 const paystack = axios.create({
   baseURL: config.PAYSTACK_BASE_URL,
