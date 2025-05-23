@@ -52,7 +52,7 @@ jobs:
         path: .
 
     - name: Deploy to render
-      uses: render-actions/deploy@v1
+      uses: johnbeynon/render-deploy-action@v0.0.8
       with:
         service-id: ${{ secrets.RENDER_SERVICE_ID }}
         api-key: ${{ secrets.RENDER_API_KEY }}
