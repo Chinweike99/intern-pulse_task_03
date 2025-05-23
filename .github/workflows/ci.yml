@@ -16,6 +16,7 @@ jobs:
     
     steps:
     - uses: actions/checkout@v3
+    
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -23,11 +24,16 @@ jobs:
         cache: 'npm'
 
     - name: Install dependencies
-      run: npm install
+      run: npm ci
   
     - name: Run linting
       run: npm run lint
 
-    - run: npm ci
-    - run: npm run build
-    - run: npm test
+    - name: Build project
+      run: npm run build
+
+    - name: Run tests
+      run: npm test
+      env:
+        PAYSTACK_SECRET_KEY: ${{ secrets.PAYSTACK_SECRET_KEY }}
+        PAYSTACK_BASE_URL: ${{ secrets.PAYSTACK_BASE_URL }}
