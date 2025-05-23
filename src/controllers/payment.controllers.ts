@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { initatePayment, verifyPayment } from "../services/payment.service";
+import { initatePayment, verifyPayment } from "../services/payment.service.js";
 
 // Helper function to transform Pastack response to desired format
 export const initatePaymentHandler = async (

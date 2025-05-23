@@ -1,5 +1,5 @@
 import request from "supertest";
-import app from "../app";
+import app from "../app.js";
 
 describe("Payment API", () => {
   describe("POST /api/v1/payments", () => {
