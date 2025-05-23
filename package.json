@@ -56,6 +56,8 @@
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.1.0",
-    "paystack": "^2.0.1"
+    "paystack": "^2.0.1",
+    "@types/cors": "^2.8.18",
+    "@types/node": "^22.15.21"
   }
 }
