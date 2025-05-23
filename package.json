@@ -4,9 +4,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon --exec tsx src/server.ts",
-    "start": "node dist/server.js",
-    "start:dev": "tsx src/server.ts",
+    "dev": "nodemon --exec tsx src/index.ts",
+    "start": "node dist/index.js",
+    "start:dev": "tsx src/index.ts",
     "build": "tsc",
     "test": "jest",
     "lint": "eslint . --ext .ts,.tsx",
