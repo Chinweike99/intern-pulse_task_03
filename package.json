@@ -50,14 +50,13 @@
   },
   "dependencies": {
     "@types/express": "^5.0.2",
+    "@types/node": "^22.15.21",
     "axios": "^1.9.0",
     "cors": "^2.8.5",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-rate-limit": "^7.5.0",
     "helmet": "^8.1.0",
-    "paystack": "^2.0.1",
-    "@types/cors": "^2.8.18",
-    "@types/node": "^22.15.21"
+    "paystack": "^2.0.1"
   }
 }
