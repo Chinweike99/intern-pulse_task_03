@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }));
 // Rate Limiting 
 const limiter = rateLimit({
     windowMs: 15 * 60 * 1000,
-    max: 10,
+    max: 100,
     standardHeaders: true,
     legacyHeaders: false,
     message: "Too many request sent in 15 minutes. Please try again after 15 minutes."

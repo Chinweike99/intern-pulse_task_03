@@ -1,11 +1,12 @@
 import { initatePayment, verifyPayment } from "../services/payment.service";
+// Helper function to transform Pastack response to desired format
 export const initatePaymentHandler = async (req, res) => {
     try {
         const { name, amount, email } = req.body;
         if (!email || !amount) {
             res.status(400).json({
                 success: false,
-                message: "Please provide email and amount"
+                message: "Please provide email and amount",
             });
             return;
         }
@@ -14,13 +15,14 @@ export const initatePaymentHandler = async (req, res) => {
         res.status(200).json({
             success: true,
             message: "Payment successfull initiated",
-            data: paymentData
+            data: paymentData,
         });
+        console.log(paymentData);
     }
     catch (error) {
         res.status(500).json({
             success: false,
-            message: error || "Internal Server Error"
+            message: error || "Internal Server Error",
         });
     }
 };
@@ -30,22 +32,45 @@ export const paymentStatusHandler = async (req, res) => {
         if (!id) {
             res.status(400).json({
                 success: false,
-                message: "Payment reference (id) is required"
+                message: "Payment reference (id) is required",
             });
             return;
         }
         const paymentData = await verifyPayment(id);
         console.log(`Payment status checked for reference: ${id}`);
+        const payment = {
+            id: `PAY-${paymentData.data.customer.customer_code}`,
+            customer_name: paymentData.data.customer.first_name &&
+                paymentData.data.customer.last_name
+                ? `${paymentData.data.customer.first_name} ${paymentData.data.customer.last_name}`.trim()
+                : "N/A",
+            customer_email: paymentData.data.customer.email,
+            status: mapPaymentStatus(paymentData.data.status),
+        };
+        console.log("Payment made: ", payment);
         res.status(200).json({
             status: "success",
             message: "Payment detail retrieved successfully",
-            paymentData
+            payment,
         });
     }
     catch (error) {
         res.status(500).json({
-            status: 'error',
-            message: error || 'Internal server error',
+            status: "error",
+            message: error || "Internal server error",
         });
+    }
+};
+// Helper function to map Paystack status to your desired status
+const mapPaymentStatus = (paystackStatus) => {
+    const status = paystackStatus.toLowerCase();
+    if (status === "success") {
+        return "completed";
+    }
+    else if (status === "abandoned" || status === "failed") {
+        return "failed";
+    }
+    else {
+        return "pending";
     }
 };

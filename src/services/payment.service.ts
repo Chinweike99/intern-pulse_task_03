@@ -2,7 +2,7 @@ import axios from "axios";
 import config from "../config/config";
 import {
   InitiatePayment,
-  PaymentResponse,
+  PaystackResponse,
 } from "../interfaces/payment.interface";
 
 const paystack = axios.create({
@@ -22,57 +22,83 @@ export const initatePayment = async (paymentData: InitiatePayment) => {
       email: paymentData.email,
     });
 
+    console.log("Customer Data: ", paymentData.name)
+    console.log("Customer Data: ", paymentData.email)
+    console.log("Customer Data: ", paymentData.amount)
     return {
       success: true,
-      message: "Payment was successfully made",
-      data: response.data.data,
+      message: "Payment was successfully Initialized",
+      data: response.data,
     };
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data.message || "Failed to initiate payment"
-      );
-    }
-    throw new Error("Payment initializaton failed");
+    console.log("Payment initializaton failed: ", error)
+    throw error
+    //   throw new Error(
+    //     error.response?.data.message || "Failed to initiate payment"
+    //   );
+    // }
+    // throw new Error("Payment initializaton failed");
   }
 };
 
-// Verify Payment
-export const verifyPayment = async (
-  reference: string
-): Promise<PaymentResponse> => {
+
+
+export const verifyPayment = async (reference: string): Promise<PaystackResponse> => {
   try {
     const response = await paystack.get(`/transaction/verify/${reference}`);
-    // return response?.data || null;
-    const data = response?.data?.data;
-    const customer = data?.customer || {};
-
-    const name =
-      `${customer.first_name || ""} ${customer.last_name || ""}`.trim() ||
-      "N/A";
-    const email = customer.email || "N/A";
-    const status =
-      data?.status === "success"
-        ? "completed"
-        : data?.status === "abandoned"
-          ? "failed"
-          : "pending";
-
-    return {
-      id: `PAY-${customer.id || "unknown"}`,
-      name,
-      email,
-      amount: data?.amount || 0,
-      status,
-      reference: data?.reference,
-      created_at: new Date(data?.created_at),
-    };
+    // return response.data as PaymentResponse;
+    return response.data as PaystackResponse;
   } catch (error) {
-    if (axios.isAxiosError(error)) {
-      throw new Error(
-        error.response?.data?.message || "Payment verification failed"
-      );
-    }
-    throw new Error("Payment verification failed");
+    console.log("Error verifying payment",error)
+    throw error;
   }
 };
+
+
+
+
+
+
+
+
+
+
+// Verify Payment
+// export const verifyPayment = async (
+//   reference: string
+// ): Promise<PaymentResponse> => {
+//   try {
+//     const response = await paystack.get(`/transaction/verify/${reference}`);
+//     // return response?.data || null;
+//     const data = response?.data;
+//     const customer = data?.customer || {};
+
+//     const name =
+//       `${customer.first_name || ""} ${customer.last_name || ""}`.trim() ||
+//       "N/A";
+//     const email = customer.email || "N/A";
+//     const status =
+//       data?.status === "success"
+//         ? "completed"
+//         : data?.status === "abandoned"
+//           ? "failed"
+//           : "pending";
+
+//     return {
+//       id: `PAY-${customer.id || "unknown"}`,
+//       name,
+//       email,
+//       amount: data?.amount || 0,
+//       status,
+//       reference: data?.reference,
+//       created_at: new Date(data?.created_at),
+//     };
+//   } catch (error) {
+//     if (axios.isAxiosError(error)) {
+//       throw new Error(
+//         error.response?.data?.message || "Payment verification failed"
+//       );
+//     }
+//     throw new Error("Payment verification failed");
+//   }
+// };

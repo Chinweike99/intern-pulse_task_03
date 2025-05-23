@@ -15,6 +15,7 @@ export default [
       },
       globals: {
         ...globals.node,
+        ...globals.jest,
       },
     },
     plugins: {
