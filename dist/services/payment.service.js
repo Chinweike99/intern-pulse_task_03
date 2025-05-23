@@ -22,7 +22,7 @@ export const initatePayment = async (paymentData) => {
         };
     }
     catch (error) {
-        console.log("Payment initializaton failed: ", error);
+        console.log("Payment initializaton failed: ");
         throw error;
     }
 };
@@ -33,7 +33,7 @@ export const verifyPayment = async (reference) => {
         return response.data;
     }
     catch (error) {
-        console.log("Error verifying payment", error);
+        console.log("Error verifying payment");
         throw error;
     }
 };

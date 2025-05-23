@@ -28,7 +28,7 @@ export const initatePayment = async (paymentData: InitiatePayment) => {
       data: response.data,
     };
   } catch (error) {
-    console.log("Payment initializaton failed: ", error)
+    console.log("Payment initializaton failed: ")
     throw error
   }
 };
@@ -41,7 +41,7 @@ export const verifyPayment = async (reference: string): Promise<PaystackResponse
     // return response.data as PaymentResponse;
     return response.data as PaystackResponse;
   } catch (error) {
-    console.log("Error verifying payment",error)
+    console.log("Error verifying payment")
     throw error;
   }
 };
