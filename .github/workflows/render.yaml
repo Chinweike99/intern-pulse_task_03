@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: payment-gateway-api
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    envVars: 
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: PAYSTACK_SECRET_KEY
+        fromSecret: PAYSTACK_SECRET_KEY
+      - key: PAYSTACK_BASE_URL
+        fromSecret: PAYSTACK_BASE_URL
