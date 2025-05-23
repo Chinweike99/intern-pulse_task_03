@@ -26,7 +26,8 @@ export const initatePaymentHandler = async (
       message: "Payment successfull initiated",
       data: paymentData,
     });
-    console.log(paymentData);
+
+    
   } catch (error) {
     res.status(500).json({
       success: false,
@@ -40,20 +41,20 @@ export const paymentStatusHandler = async (
   res: Response
 ): Promise<void> => {
   try {
-    const { id } = req.params;
-    if (!id) {
+    const { reference } = req.params;
+    if (!reference) {
       res.status(400).json({
         success: false,
-        message: "Payment reference (id) is required",
+        message: "Payment reference (reference) is required",
       });
       return;
     }
 
-    const paymentData = await verifyPayment(id);
-    console.log(`Payment status checked for reference: ${id}`);
+    const paymentData = await verifyPayment(reference);
+    console.log(`Payment status checked for reference: ${reference}`);
 
     const payment = {
-      id: `PAY-${paymentData.data.customer.customer_code}`,
+      reference: `PAY-${paymentData.data.customer.customer_code}`,
       customer_name:
         paymentData.data.customer.first_name &&
         paymentData.data.customer.last_name
@@ -62,8 +63,6 @@ export const paymentStatusHandler = async (
       customer_email: paymentData.data.customer.email,
       status: mapPaymentStatus(paymentData.data.status),
     };
-
-    console.log("Payment made: ", payment);
 
     res.status(200).json({
       status: "success",

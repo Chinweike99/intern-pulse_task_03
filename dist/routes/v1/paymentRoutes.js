@@ -2,5 +2,5 @@ import { Router } from "express";
 import { initatePaymentHandler, paymentStatusHandler } from "../../controllers/payment.controllers";
 const router = Router();
 router.post('/', initatePaymentHandler);
-router.get('/:id', paymentStatusHandler);
+router.get('/:reference', paymentStatusHandler);
 export default router;

@@ -15,9 +15,6 @@ export const initatePayment = async (paymentData) => {
             amount: paymentData.amount * 100,
             email: paymentData.email,
         });
-        console.log("Customer Data: ", paymentData.name);
-        console.log("Customer Data: ", paymentData.email);
-        console.log("Customer Data: ", paymentData.amount);
         return {
             success: true,
             message: "Payment was successfully Initialized",
@@ -27,11 +24,6 @@ export const initatePayment = async (paymentData) => {
     catch (error) {
         console.log("Payment initializaton failed: ", error);
         throw error;
-        //   throw new Error(
-        //     error.response?.data.message || "Failed to initiate payment"
-        //   );
-        // }
-        // throw new Error("Payment initializaton failed");
     }
 };
 export const verifyPayment = async (reference) => {

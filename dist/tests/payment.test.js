@@ -9,18 +9,21 @@ describe("Payment API", () => {
                 amount: 4000,
             });
             expect(response.status).toBe(200);
-            expect(response.body.status).toBe("success");
-            expect(response.body.data).toHaveProperty("Authorization_url");
-            expect(response.body.data).toHaveProperty("access_code");
-            expect(response.body.data).toHaveProperty("reference");
+            expect(response.body.success).toBe(true);
+            expect(response.body.message).toBe("Payment successfull initiated");
+            expect(response.body.data).toHaveProperty("data");
+            expect(response.body.data.data.data).toHaveProperty("authorization_url");
+            expect(response.body.data.data.data).toHaveProperty("access_code");
+            expect(response.body.data.data.data).toHaveProperty("reference");
         });
         it("should return error for missing email", async () => {
             const response = await request(app).post("/api/v1/payments").send({
                 name: "Samuel Doe",
-                amout: 4000,
+                amount: 4000,
             });
             expect(response.status).toBe(400);
-            expect(response.body.status).toBe("error");
+            expect(response.body.success).toBe(false);
+            expect(response.body.message).toBe("Please provide email and amount");
         });
         it("should return error for missing amount", async () => {
             const response = await request(app).post("/api/v1/payments").send({
@@ -28,26 +31,29 @@ describe("Payment API", () => {
                 email: "samuel.doe@gmail.com",
             });
             expect(response.status).toBe(400);
-            expect(response.body.status).toBe("error");
+            expect(response.body.success).toBe(false);
+            expect(response.body.message).toBe("Please provide email and amount");
         });
     });
-    describe("GET /api/v1/payments/:id", () => {
+    describe("GET /api/v1/payments/:reference", () => {
         it("should retrieve payment status", async () => {
-            // Initiate a payment to get an ID
-            const response = await request(app).post("/api/v1/payments").send({
+            const paymentResponse = await request(app).post("/api/v1/payments").send({
                 name: "Samuel Doe",
                 email: "samuel.doe@gmail.com",
-                amlount: 5000,
+                amount: 5000,
             });
-            const id = response.body.data.id;
-            const retrieveStatus = await request(app).get(`/api/v1/${id}`);
-            expect(retrieveStatus.status).toBe(200);
-            expect(retrieveStatus.body.status).toBe("success");
-            expect(retrieveStatus.body.payment).toHaveProperty("id", id);
-            expect(retrieveStatus.body.payment).toHaveProperty("status");
+            const reference = paymentResponse.body.data.data.data.reference;
+            const statusResponse = await request(app).get(`/api/v1/payments/${reference}`); // Fixed endpoint
+            expect(statusResponse.status).toBe(200);
+            expect(statusResponse.body.status).toBe("success");
+            expect(statusResponse.body.message).toBe("Payment detail retrieved successfully");
+            expect(statusResponse.body.payment).toHaveProperty("reference");
+            expect(statusResponse.body.payment).toHaveProperty("status");
+            expect(statusResponse.body.payment).toHaveProperty("customer_name");
+            expect(statusResponse.body.payment).toHaveProperty("customer_email");
         });
-        it("should return error for invalid reference (id)", async () => {
-            const response = await request(app).get("/api/v1/payments/invalid-id");
+        it("should return error for invalid reference", async () => {
+            const response = await request(app).get("/api/v1/payments/invalid-reference");
             expect(response.status).toBe(500);
             expect(response.body.status).toBe("error");
         });
