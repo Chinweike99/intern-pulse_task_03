@@ -10,6 +10,6 @@ services:
       - key: PORT
         value: 3000
       - key: PAYSTACK_SECRET_KEY
-        sync: false  # Set manually in dashboard
+        sync: false
       - key: PAYSTACK_BASE_URL
         value: https://api.paystack.co
