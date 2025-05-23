@@ -25,7 +25,11 @@ jobs:
     - run: npm ci
     - run: npm run build
     - run: npm test
-    
+      env:
+        PAYSTACK_SECRET_KEY: ${{ secrets.PAYSTACK_SECRET_KEY }}
+        PAYSTACK_BASE_URL: ${{ secrets.PAYSTACK_BASE_URL }}
+        NODE_ENV: test    
+
     - name: Archive production artifacts
       uses: actions/upload-artifact@v4
       with:
