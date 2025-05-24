@@ -1,4 +1,4 @@
-import { initatePayment, verifyPayment } from "../services/payment.service.js";
+import { initatePayment, verifyPayment } from "../services/payment.service";
 // Helper function to transform Pastack response to desired format
 export const initatePaymentHandler = async (req, res) => {
     try {
@@ -11,18 +11,20 @@ export const initatePaymentHandler = async (req, res) => {
             return;
         }
         const paymentData = await initatePayment({ name, amount, email });
-        console.log(`Payment initialized for ${name}, amount: ${amount}, email: ${email}`);
+        console.log(`Payment initialized for ${name}\namount: ${amount}\nemail: ${email}`);
         res.status(200).json({
             success: true,
             message: "Payment successfull initiated",
             data: paymentData,
         });
+        return;
     }
     catch (error) {
         res.status(500).json({
             success: false,
-            message: error || "Internal Server Error",
+            message: error instanceof Error ? error.message : "Internal server error",
         });
+        return;
     }
 };
 export const paymentStatusHandler = async (req, res) => {
@@ -51,12 +53,14 @@ export const paymentStatusHandler = async (req, res) => {
             message: "Payment detail retrieved successfully",
             payment,
         });
+        return;
     }
     catch (error) {
         res.status(500).json({
             status: "error",
-            message: error || "Internal server error",
+            message: error instanceof Error ? error.message : "Internal server error",
         });
+        return;
     }
 };
 // Helper function to map Paystack status to your desired status
