@@ -1,5 +1,5 @@
 import axios from "axios";
-import config from "../config/config.js";
+import config from "../config/config";
 const paystack = axios.create({
     baseURL: config.PAYSTACK_BASE_URL,
     headers: {
